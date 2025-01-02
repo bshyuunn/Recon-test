@@ -4,7 +4,8 @@ pragma solidity ^0.8.0;
 
 import {BaseSetup} from "@chimera/BaseSetup.sol";
 
-import "src";
+import {FlashLoanReceiver} from "src/FlashLoanReceiver.sol";
+import {NaiveReceiverLenderPool} from "src/NaiveReceiverLenderPool.sol";
 
 abstract contract Setup is BaseSetup {
 
@@ -12,8 +13,8 @@ abstract contract Setup is BaseSetup {
     NaiveReceiverLenderPool naiveReceiverLenderPool;
 
     function setup() internal virtual override {
-      flashLoanReceiver = new FlashLoanReceiver(); // TODO: Add parameters here
-      naiveReceiverLenderPool = new NaiveReceiverLenderPool(); // TODO: Add parameters here
+      naiveReceiverLenderPool = new NaiveReceiverLenderPool();
+      flashLoanReceiver = new FlashLoanReceiver(payable(address(naiveReceiverLenderPool)));
 
     }
 }
